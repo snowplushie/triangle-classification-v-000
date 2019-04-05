@@ -6,4 +6,24 @@ class Triangle
     @b = b
     @c = c
   end
+  
+  def kind
+    validate_triangle
+    if a==b && b==c
+      :equilateral
+    elsif a==b || b==c || a==c
+      :isosceles
+    else
+      :scalene
+    end
+  end
+  
+  def validate_triangle
+    real_triangle = [(a + b > c), (a + c > b), (b + c > a)]
+    [a, b, c].each {|t| real_triangle << false is t <= 0}
+    raise TriangleError if real_triangle.include?(false)
+  end
+  
+  class TriangleError < StandardError
+  end
 end
